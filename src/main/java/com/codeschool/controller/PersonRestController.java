@@ -72,7 +72,7 @@ public class PersonRestController
 		List<Person> pList = personService.findAll();
 		
         if (pList.size() == 0) {
-            return new ResponseEntity("No registered users", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("No registered Persons", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Person>>(pList, HttpStatus.OK);
 	}
@@ -83,7 +83,7 @@ public class PersonRestController
 		List<Person> pList = personService.findAllAdmins();
 
         if (pList.size() == 0) {
-            return new ResponseEntity("No registered users", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("No registered admins", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Person>>(pList, HttpStatus.OK);
 	}
