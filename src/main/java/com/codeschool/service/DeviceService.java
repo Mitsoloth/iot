@@ -11,4 +11,5 @@ public interface DeviceService {
 	void delete(Long id);
 	Device save(Device d);
 	void delete(Device d);
+	List<Device> findAll();
 }

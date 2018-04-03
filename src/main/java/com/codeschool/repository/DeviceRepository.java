@@ -14,5 +14,5 @@ public interface DeviceRepository extends JpaRepository<Device, Long> {
     //List<Device> findBypname(String pname);
     //Device findByEmail(String email);
     Device findById(Integer id);
-    //List<Person> findAll();
+    List<Device> findAll();
 }

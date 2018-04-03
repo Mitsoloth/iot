@@ -17,12 +17,11 @@ public class Person {
 	private String surname;
 	private String email;
 	private String ppassword;
-	private byte role;
+	private int role;
 	
 
-	public Person(int id, String pname, String surname, String email, String ppassword, byte role) {
+	public Person(String pname, String surname, String email, String ppassword, int role) {
 		super();
-		this.id = id;
 		this.pname = pname;
 		this.surname = surname;
 		this.email = email;
@@ -33,9 +32,7 @@ public class Person {
 	public Person(){
 		
 	}
-	
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -80,7 +77,7 @@ public class Person {
 		return role;
 	}
 
-	public void setRole(byte role) {
+	public void setRole(int role) {
 		this.role = role;
 	}
 

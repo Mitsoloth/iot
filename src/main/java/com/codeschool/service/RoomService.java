@@ -1,5 +1,7 @@
 package com.codeschool.service;
 
+import java.util.List;
+
 import com.codeschool.entities.Room;
 
 public interface RoomService 
@@ -9,4 +11,5 @@ public interface RoomService
 	Room save(Room r);
 	void delete(Long id);
 	void delete(Room r);
+	List<Room> findAll();
 }

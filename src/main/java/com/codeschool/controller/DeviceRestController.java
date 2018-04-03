@@ -1,5 +1,7 @@
 package com.codeschool.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.codeschool.entities.Device;
+import com.codeschool.entities.Person;
 import com.codeschool.service.DeviceService;
 
 @RestController
@@ -47,8 +50,27 @@ public class DeviceRestController {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setLocation(ucBuilder.path("/getDeviceById/{id}").buildAndExpand(d.getId()).toUri());
 	    return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-		
-		
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/viewAllDevices")
+	public ResponseEntity<?> viewAllDevices() 
+	{
+		List<Device> dList = deviceService.findAll();
+		
+        if (dList.size() == 0) {
+            return new ResponseEntity("No registered devices", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Device>>(dList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/deleteDeviceById/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> deleteDeviceById(@PathVariable("id") Integer id) 
+    {
+        Device d = deviceService.findById(id);
+        if (d == null) {
+            return new ResponseEntity("False Device ID", HttpStatus.NOT_FOUND);
+        }
+        deviceService.delete(d);
+		return new ResponseEntity("Device with name: " + d.getDname() + " and type: " + d.getDtype() + " has been deleted.", HttpStatus.OK);
+    }
 }
