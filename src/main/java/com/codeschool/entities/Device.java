@@ -16,9 +16,9 @@ public class Device {
 	private String dname;
 	private String dtype;
 	private int roomID;
-	private byte dstatus;
+	private int dstatus;
 	
-	public Device(int id, String dname, String dtype, int roomID, byte dstatus) {
+	public Device(int id, String dname, String dtype, int roomID, int dstatus) {
 		super();
 		this.id = id;
 		this.dname = dname;
@@ -63,11 +63,11 @@ public class Device {
 		this.roomID = roomID;
 	}
 
-	public byte getDstatus() {
+	public int getDstatus() {
 		return dstatus;
 	}
 
-	public void setDstatus(byte dstatus) {
+	public void setDstatus(int dstatus) {
 		this.dstatus = dstatus;
 	}
 

@@ -1,5 +1,7 @@
 package com.codeschool.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.codeschool.entities.Person;
 import com.codeschool.entities.Room;
 import com.codeschool.service.RoomService;
 
@@ -32,7 +36,6 @@ public class RoomRestController
 	@RequestMapping(method = RequestMethod.POST, value = "/addRoom")
 	public ResponseEntity<?> addRoom(@RequestBody Room room, UriComponentsBuilder ucBuilder) 
 	{
-		
 		Room r = room;
 		
 		roomService.save(r);
@@ -40,8 +43,28 @@ public class RoomRestController
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setLocation(ucBuilder.path("/getRoomById/{id}").buildAndExpand(r.getId()).toUri());
 	    return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-		
-		
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/viewAllRooms")
+	public ResponseEntity<?> viewAllRooms() 
+	{
+		List<Room> dList = roomService.findAll();
+		
+        if (dList.size() == 0) {
+            return new ResponseEntity("No registered rooms", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Room>>(dList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/deleteRoomById/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> deleteRoomById(@PathVariable("id") Integer id) 
+    {
+        Room r = roomService.findRoomNameByID(id);
+        if (r == null) {
+            return new ResponseEntity("False Room ID", HttpStatus.NOT_FOUND);
+        }
+        roomService.delete(r);
+		return new ResponseEntity("Room with surname: " + r.getName() + " has been deleted.", HttpStatus.OK);
+    }
+	
 }

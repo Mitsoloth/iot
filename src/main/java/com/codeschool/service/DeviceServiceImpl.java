@@ -28,4 +28,8 @@ public class DeviceServiceImpl implements DeviceService {
 	public void delete(Device d) {
 		deviceRep.delete(d);
 	}
+	@Override
+	public List<Device> findAll() {
+		return deviceRep.findAll();
+	}
 }

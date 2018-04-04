@@ -1,5 +1,7 @@
 package com.codeschool.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,11 @@ public class RoomServiceImpl implements RoomService {
 	public void delete(Room r) {
 		roomRep.delete(r);
 
+	}
+
+	@Override
+	public List<Room> findAll() {
+		return roomRep.findAll();
 	}
 
 }

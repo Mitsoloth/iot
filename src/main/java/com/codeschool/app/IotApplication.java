@@ -14,6 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class IotApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(IotApplication.class, args);
+	
 	}
 }

@@ -1,5 +1,7 @@
 package com.codeschool.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,7 @@ public class PersonServiceImpl implements PersonService {
 		return personRep.findByEmail(email);
 	}
 	@Override
-	public Person findById(Integer id) {
+	public Person findById(int id) {
 		return personRep.findById(id);
 	}
 	@Override
@@ -30,5 +32,17 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public void delete(Person p) {
 		personRep.delete(p);
+	}
+	@Override
+	public List<Person> findAll() {		
+		return personRep.findAll();
+	}
+	@Override
+	public List<Person> findAllAdmins() {
+		return personRep.findAllPersonsByRole(1);
+	}
+	@Override
+	public List<Person> findAllUsers() {
+		return personRep.findAllPersonsByRole(2);
 	}
 }
