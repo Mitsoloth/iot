@@ -23,6 +23,10 @@
 				<td><form:input path="email" /></td>
 			</tr>
 			<tr>
+				<td><form:label path="ppassword">Password</form:label></td>
+				<td><form:input path="ppassword" /></td>
+			</tr>
+			<tr>
 				<td><input type="submit" value="Submit" /></td>
 			</tr>
 		</table>

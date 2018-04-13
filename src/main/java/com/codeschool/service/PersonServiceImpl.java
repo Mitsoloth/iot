@@ -7,11 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.codeschool.entities.Person;
 import com.codeschool.repository.PersonRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class PersonServiceImpl implements PersonService {
 	@Autowired
 	private PersonRepository personRep;
+	
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public Person findByEmail(String email) {
@@ -27,6 +31,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 	@Override
 	public Person save(Person p) {
+		p.setPpassword(bCryptPasswordEncoder.encode(p.getPpassword()));
 		return personRep.save(p);
 	}
 	@Override

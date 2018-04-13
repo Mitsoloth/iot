@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.codeschool.entities.Person;
 import com.codeschool.service.PersonService;
+import com.codeschool.entities.Userrole;
+import com.codeschool.service.UserroleService;
 
 @RestController
 public class PersonRestController 
@@ -23,7 +26,10 @@ public class PersonRestController
 	@Autowired
 	PersonService personService;	
 	
-	@RequestMapping("/getPersonByMail")
+	@Autowired
+	UserroleService userroleService;
+	
+	@RequestMapping("/api/getPersonByMail")
 	public Person getPerson(@RequestParam(value = "email", defaultValue = "a@a") String email) 
 	{
 		Person p = personService.findByEmail(email);
@@ -31,7 +37,8 @@ public class PersonRestController
 		return p;
 	}
 	
-    @RequestMapping(value = "/getPersonById/{id}", method = RequestMethod.GET)
+	@CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping(value = "/api/getPersonById/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getPersonById(@PathVariable("id") Integer id) 
     {
         //logger.info("Fetching User with id {}", id);
@@ -44,7 +51,7 @@ public class PersonRestController
         return new ResponseEntity<Person>(p, HttpStatus.OK);
     }
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/addPerson")
+	@RequestMapping(method = RequestMethod.POST, value = "/api/addPerson")
 	public ResponseEntity<?> addPerson(@RequestBody Person person, UriComponentsBuilder ucBuilder) 
 	{
 		Person p = person;
@@ -54,11 +61,13 @@ public class PersonRestController
 		
 		personCheck = personService.findByEmail(p.getEmail());
 		
-		if (personCheck == null){	
+		if (personCheck == null){
+			Userrole r = userroleService.findNameByRoleid(2);
+			p.setRole(r);
 			personService.save(p);
 	
 			HttpHeaders headers = new HttpHeaders();
-	        headers.setLocation(ucBuilder.path("/getPersonById/{id}").buildAndExpand(p.getId()).toUri());
+	        headers.setLocation(ucBuilder.path("/api/getPersonById/{id}").buildAndExpand(p.getId()).toUri());
 	        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 		}
 		else {
@@ -66,7 +75,7 @@ public class PersonRestController
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/viewAllPersons")
+	@RequestMapping(method = RequestMethod.GET, value = "/api/viewAllPersons")
 	public ResponseEntity<?> viewAllPersons() 
 	{
 		List<Person> pList = personService.findAll();
@@ -77,7 +86,7 @@ public class PersonRestController
         return new ResponseEntity<List<Person>>(pList, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/viewAllAdmins")
+	@RequestMapping(method = RequestMethod.GET, value = "/api/viewAllAdmins")
 	public ResponseEntity<?> viewAllAdmins() 
 	{
 		List<Person> pList = personService.findAllAdmins();
@@ -87,7 +96,7 @@ public class PersonRestController
         }
         return new ResponseEntity<List<Person>>(pList, HttpStatus.OK);
 	}
-	@RequestMapping(method = RequestMethod.GET, value = "/viewAllUsers")
+	@RequestMapping(method = RequestMethod.GET, value = "/api/viewAllUsers")
 	public ResponseEntity<?> viewAllUsers() 
 	{
 		List<Person> pList = personService.findAllUsers();
@@ -98,7 +107,7 @@ public class PersonRestController
         return new ResponseEntity<List<Person>>(pList, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/deletePersonById/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/deletePersonById/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> deletePersonById(@PathVariable("id") Integer id) 
     {
         Person p = personService.findById(id);
