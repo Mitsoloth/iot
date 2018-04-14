@@ -55,14 +55,19 @@ public class PersonRestController
 	public ResponseEntity<?> addPerson(@RequestBody Person person, UriComponentsBuilder ucBuilder) 
 	{
 		Person p = person;
+		
+		
+		Userrole ur = p.getRole();
 		Person personCheck = null;
 		System.out.println(p);
 		
-		
+//		String a = p.getR;
 		personCheck = personService.findByEmail(p.getEmail());
 		
 		if (personCheck == null){
-			Userrole r = userroleService.findNameByRoleid(2);
+			System.out.println(p);
+			Userrole r = userroleService.findRoleidByName(ur.getName());
+			//Userrole r = userroleService.findNameByRoleid(2);
 			p.setRole(r);
 			personService.save(p);
 	
