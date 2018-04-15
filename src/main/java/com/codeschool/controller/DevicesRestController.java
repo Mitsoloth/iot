@@ -32,4 +32,17 @@ public class DevicesRestController {
 		
 	}
 	
+	@RequestMapping(method = RequestMethod.PATCH, value = "/api/changeStatus")
+	public ResponseEntity<?> changeStatus(@RequestBody Device device, UriComponentsBuilder ucBuilder) 
+	{
+		Device d = device;
+		
+		deviceService.save(d);
+	
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setLocation(ucBuilder.path("/api/getDeviceById/{id}").buildAndExpand(d.getId()).toUri());
+	    return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+		
+	}
+	
 }

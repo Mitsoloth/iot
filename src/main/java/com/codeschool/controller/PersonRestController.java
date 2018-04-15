@@ -29,12 +29,25 @@ public class PersonRestController
 	@Autowired
 	UserroleService userroleService;
 	
+	@RequestMapping(value = "/api/authenticate", method = RequestMethod.GET)
+	public ResponseEntity<?> justPingIt()
+	{
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	@RequestMapping("/api/getPersonByMail")
-	public Person getPerson(@RequestParam(value = "email", defaultValue = "a@a") String email) 
+	public ResponseEntity<?> getPerson(@RequestParam(value = "email", defaultValue = "a@a") String email) 
 	{
 		Person p = personService.findByEmail(email);
-		System.out.println(p);
-		return p;
+		//Person p = personService.findByEmail("a@b.com");
+		//System.out.println(p);
+		//return p;
+		if (p == null) {
+        	System.out.println("gkouxou!");
+            //logger.error("User with id {} not found.", id);
+            return new ResponseEntity("Person with dat email not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Person>(p, HttpStatus.OK);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
