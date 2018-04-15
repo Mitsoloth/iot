@@ -30,7 +30,7 @@ public class DevicesPermissionsRestController {
 	@Autowired
 	PersonService personService;
 	
-	@RequestMapping(value = "/getDevicesPermissionsByPersonID/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/getDevicesPermissionsByPersonID/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getDevicesPermissionsByPersonID(@PathVariable("id") Integer id) {
 		
 		Person p = personService.findById(id);
