@@ -13,7 +13,7 @@ import com.codeschool.entities.Person;
 public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findBypname(String pname);
     Person findByEmail(String email);
-    Person findById(int id);
+    Person findByPersonID(int id);
     List<Person> findAll();
 	List<Person> findAllPersonsByRole(int role);
 	void delete(Person p);

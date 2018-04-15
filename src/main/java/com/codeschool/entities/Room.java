@@ -12,23 +12,28 @@ public class Room {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private int roomID;
 	private String name;
 	
 	public Room(int id, String name) {
 		super();
-		this.id = id;
+		this.roomID = id;
 		this.name = name;
 	}
 
 	public Room(){
 		
 	}
-	public int getId() {
-		return id;
+	public int getRoomID() {
+		return roomID;
 	}
+	
 	public String getName() {
 		return name;
+	}
+	
+	public void setRoomID(int roomid) {
+		this.roomID = roomid;
 	}
 
 	public void setName(String name) {

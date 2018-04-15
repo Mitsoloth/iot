@@ -6,14 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
 
 @Entity
 public class Userrole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int roleid;
+	private int roleID;
 	private String name;
 	
 	//@OneToMany(mappedBy = "role")
@@ -22,14 +20,14 @@ public class Userrole {
 	/**
 	 * @return the roleid
 	 */
-	public int getRoleid() {
-		return roleid;
+	public int getRoleID() {
+		return roleID;
 	}
 	/**
 	 * @param roleid the roleid to set
 	 */
 	public void setRoleid(int roleid) {
-		this.roleid = roleid;
+		this.roleID = roleid;
 	}
 	/**
 	 * @return the name

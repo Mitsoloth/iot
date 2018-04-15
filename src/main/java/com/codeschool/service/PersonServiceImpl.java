@@ -23,7 +23,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 	@Override
 	public Person findById(int id) {
-		return personRep.findById(id);
+		return personRep.findByPersonID(id);
 	}
 	@Override
 	public void delete(Long id) {

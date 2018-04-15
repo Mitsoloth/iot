@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-//@ComponentScan({"com.codeschool.controller","com.codeschool.service"})
 @ComponentScan(basePackages = "com.codeschool")
 @EntityScan("com.codeschool.entities")
 @EnableJpaRepositories("com.codeschool.repository")

@@ -1,10 +1,18 @@
 package com.codeschool.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+//import org.springframework.beans.factory.annotation.Autowired;
+
+//import com.codeschool.service.RoomService;
 
 @Entity
 @Table(name="device")
@@ -12,18 +20,20 @@ public class Device {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private int deviceID;
 	private String dname;
 	private String dtype;
-	private int roomID;
+	@ManyToOne
+	@JoinColumn(name = "roomid")
+	protected Room room;
 	private int dstatus;
 	
-	public Device(int id, String dname, String dtype, int roomID, int dstatus) {
+	public Device(int id, String dname, String dtype, Room room, int dstatus) {
 		super();
-		this.id = id;
+		this.deviceID = id;
 		this.dname = dname;
 		this.dtype = dtype;
-		this.roomID = roomID;
+		this.room =  room;
 		this.dstatus = dstatus;
 	}
 	
@@ -32,11 +42,11 @@ public class Device {
 	}
 
 	public int getId() {
-		return id;
+		return deviceID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.deviceID = id;
 	}
 	
 	public String getDname() {
@@ -55,12 +65,12 @@ public class Device {
 		this.dtype = dtype;
 	}
 
-	public int getRoomID() {
-		return roomID;
+	public Room getRoom() {
+		return room;
 	}
 
-	public void setRoomID(int roomID) {
-		this.roomID = roomID;
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	public int getDstatus() {

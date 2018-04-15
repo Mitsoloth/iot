@@ -13,7 +13,7 @@ import com.codeschool.entities.Room;
 @Repository("roomRepository")
 public interface RoomRepository extends JpaRepository<Room, Long> 
 {
-	Room findRoomIdByName(String name);
-	Room findRoomNameById(int id);
+	Room findRoomIDByName(String name);
+	Room findNameByRoomID(int id);
 	List<Room> findAll();
 }

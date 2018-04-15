@@ -13,7 +13,7 @@ import com.codeschool.entities.Userrole;
 @Repository("userroleRepository")
 public interface UserroleRepository extends JpaRepository<Userrole, Long> 
 {
-	Userrole findRoleidByName(String name);
-	Userrole findNameByRoleid(int id);
+	Userrole findRoleIDByName(String name);
+	Userrole findNameByRoleID(int id);
 	List<Userrole> findAll();
 }

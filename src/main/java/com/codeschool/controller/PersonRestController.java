@@ -57,7 +57,7 @@ public class PersonRestController
 		Person p = person;
 		
 		
-		Userrole ur = p.getRole();
+//		Userrole ur = p.getRole();
 		Person personCheck = null;
 		System.out.println(p);
 		
@@ -66,9 +66,9 @@ public class PersonRestController
 		
 		if (personCheck == null){
 			System.out.println(p);
-			Userrole r = userroleService.findRoleidByName(ur.getName());
-			//Userrole r = userroleService.findNameByRoleid(2);
-			p.setRole(r);
+//			Userrole r = userroleService.findRoleIDByName(ur.getName());
+			
+//			p.setRole(r);
 			personService.save(p);
 	
 			HttpHeaders headers = new HttpHeaders();

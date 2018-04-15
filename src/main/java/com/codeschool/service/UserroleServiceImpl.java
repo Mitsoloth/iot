@@ -14,13 +14,13 @@ public class UserroleServiceImpl implements UserroleService {
 	@Autowired
 	private UserroleRepository userroleRep;
 	@Override
-	public Userrole findRoleidByName(String name) {
-		return userroleRep.findRoleidByName(name);
+	public Userrole findRoleIDByName(String name) {
+		return userroleRep.findRoleIDByName(name);
 	}
 
 	@Override
-	public Userrole findNameByRoleid(int id) {
-		return userroleRep.findNameByRoleid(id);
+	public Userrole findNameByRoleID(int id) {
+		return userroleRep.findNameByRoleID(id);
 	}
 
 	@Override

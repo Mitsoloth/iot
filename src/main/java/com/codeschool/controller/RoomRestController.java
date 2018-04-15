@@ -41,7 +41,7 @@ public class RoomRestController
 		roomService.save(r);
 	
 		HttpHeaders headers = new HttpHeaders();
-	    headers.setLocation(ucBuilder.path("/getRoomById/{id}").buildAndExpand(r.getId()).toUri());
+	    headers.setLocation(ucBuilder.path("/getRoomById/{id}").buildAndExpand(r.getRoomID()).toUri());
 	    return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 

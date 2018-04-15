@@ -14,7 +14,7 @@ public class DeviceServiceImpl implements DeviceService {
 	
 	@Override
 	public Device findById(Integer id) {
-		return deviceRep.findById(id);
+		return deviceRep.findByDeviceID(id);
 	}
 	@Override
 	public void delete(Long id) {

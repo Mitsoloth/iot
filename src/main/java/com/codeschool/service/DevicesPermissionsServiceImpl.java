@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.codeschool.entities.Device;
 import com.codeschool.entities.DevicesPermissions;
+import com.codeschool.entities.Person;
 import com.codeschool.repository.DevicesPermissionsRepository;
 
 @Service
@@ -14,13 +16,13 @@ public class DevicesPermissionsServiceImpl implements DevicesPermissionsService 
 	private DevicesPermissionsRepository devicesPermissionsRep;
 	
 	@Override
-	public DevicesPermissions findById(Integer id) {
-		return devicesPermissionsRep.findById(id);
+	public DevicesPermissions findByPermissionID(Integer id) {
+		return devicesPermissionsRep.findByPermissionID(id);
 	}
 
 	@Override
-	public List<DevicesPermissions> findByPersonID(Integer personID) {
-		return devicesPermissionsRep.findByPersonID(personID);
+	public List<DevicesPermissions> findByPerson(Person person) {
+		return devicesPermissionsRep.findByPerson(person);
 	}
 
 	@Override
@@ -39,5 +41,11 @@ public class DevicesPermissionsServiceImpl implements DevicesPermissionsService 
 		// TODO Auto-generated method stub
 
 	}
+
+//	@Override
+//	public List<Device> findByPersonQuery(Integer personid) {
+//		// TODO Auto-generated method stub
+//		return devicesPermissionsRep.findByPersonQuery(personid);
+//	}
 
 }

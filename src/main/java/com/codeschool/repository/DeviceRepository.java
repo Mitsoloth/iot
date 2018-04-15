@@ -13,6 +13,6 @@ import com.codeschool.entities.Device;
 public interface DeviceRepository extends JpaRepository<Device, Long> {
     //List<Device> findBypname(String pname);
     //Device findByEmail(String email);
-    Device findById(Integer id);
+    Device findByDeviceID(Integer id);
     List<Device> findAll();
 }

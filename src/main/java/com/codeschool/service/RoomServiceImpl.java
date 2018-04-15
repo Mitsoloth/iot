@@ -15,12 +15,12 @@ public class RoomServiceImpl implements RoomService {
 	private RoomRepository roomRep;
 	@Override
 	public Room findRoomIdByName(String name) {
-		return roomRep.findRoomIdByName(name);
+		return roomRep.findRoomIDByName(name);
 	}
 
 	@Override
 	public Room findRoomNameByID(int id) {
-		return roomRep.findRoomNameById(id);
+		return roomRep.findNameByRoomID(id);
 	}
 
 	@Override

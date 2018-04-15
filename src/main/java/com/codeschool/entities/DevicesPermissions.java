@@ -1,26 +1,36 @@
 package com.codeschool.entities;
 
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="user_device")
-public class DevicesPermissions {
+public class DevicesPermissions{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	private int personID;
-	private int deviceID;
+	private int permissionID;
+	@ManyToOne//(cascade = CascadeType.ALL)
+	@JoinColumn(name = "personid")	
+	protected Person person;
+	@ManyToOne//(cascade = CascadeType.ALL)
+	@JoinColumn(name = "deviceid")	
+	protected Device device;
 	
-	public DevicesPermissions(int id, int personID, int deviceID) {
+	public DevicesPermissions(int id, Person person, Device device) {
 		super();
-		this.id = id;
-		this.personID = personID;
-		this.deviceID = deviceID;
+		this.permissionID = id;
+		this.person = person;
+		this.device = device;
 	}
 	
 	public DevicesPermissions(){
@@ -28,27 +38,27 @@ public class DevicesPermissions {
 	}
 	
 	public int getId() {
-		return id;
+		return permissionID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.permissionID = id;
 	}
 
-	public int getPersonID() {
-		return personID;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setPersonID(int personID) {
-		this.personID = personID;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
-	public int getDeviceID() {
-		return deviceID;
+	public Device getDevice() {
+		return device;
 	}
 
-	public void setDeviceID(int deviceID) {
-		this.deviceID = deviceID;
+	public void setDevice(Device device) {
+		this.device = device;
 	}
 
 }

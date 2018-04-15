@@ -6,8 +6,8 @@ import com.codeschool.entities.Userrole;;
 
 public interface UserroleService 
 {
-	Userrole findRoleidByName(String name);
-	Userrole findNameByRoleid(int id);
+	Userrole findRoleIDByName(String name);
+	Userrole findNameByRoleID(int id);
 	Userrole save(Userrole r);
 	void delete(Long id);
 	void delete(Userrole r);

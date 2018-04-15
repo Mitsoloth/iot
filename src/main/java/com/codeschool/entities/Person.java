@@ -1,6 +1,5 @@
 package com.codeschool.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +8,6 @@ import javax.persistence.Table;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 @Table(name="person")
@@ -17,14 +15,13 @@ public class Person {
 		
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private int personID;
 	private String pname;
 	private String surname;
 	private String email;
 	private String ppassword;
-	@ManyToOne//(cascade = {CascadeType.MERGE})
-	@JoinColumn(name = "roleid")
-	
+	@ManyToOne
+	@JoinColumn(name = "roleid")	
 	protected Userrole role;
 	
 
@@ -42,11 +39,11 @@ public class Person {
 	}
 
 	public int getId() {
-		return id;
+		return personID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.personID = id;
 	}
 
 	public String getPname() {
@@ -91,7 +88,7 @@ public class Person {
 
 	@Override
 	public String toString(){
-		return "Person ("+id+", "+pname+", "+surname+", "+email+", "+ppassword+", "+role+")";
+		return "Person ("+personID+", "+pname+", "+surname+", "+email+", "+ppassword+", "+role+")";
 	}
 	
 }

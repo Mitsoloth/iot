@@ -1,5 +1,6 @@
 package com.codeschool.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.codeschool.entities.Device;
 import com.codeschool.entities.DevicesPermissions;
+import com.codeschool.entities.Person;
 import com.codeschool.entities.Room;
 import com.codeschool.service.DevicesPermissionsService;
+import com.codeschool.service.PersonService;
 import com.codeschool.service.RoomService;
 
 @RestController
@@ -23,15 +27,30 @@ public class DevicesPermissionsRestController {
 	
 	@Autowired
 	DevicesPermissionsService devicesPermissionsService;
+	@Autowired
+	PersonService personService;
 	
 	@RequestMapping(value = "/getDevicesPermissionsByPersonID/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getDevicesPermissionsByPersonID(@PathVariable("id") Integer id) {
-        List<DevicesPermissions> dp = devicesPermissionsService.findByPersonID(id);
-        if (dp == null) 
+		
+		Person p = personService.findById(id);
+//		List<Device> dp = devicesPermissionsService.findByPersonQuery(id);
+		List<DevicesPermissions> dps = devicesPermissionsService.findByPerson(p);
+		
+		List<Device> dList = new ArrayList<Device>();
+		
+		//dps.forEach(dp->System.out.println(dp));
+		
+		dps.forEach(dp->{
+//			System.out.println(dp.getDevice().getDname());
+			dList.add(dp.getDevice());
+			});
+		
+        if (dps == null) 
         {
             return new ResponseEntity("No permissions found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<List<DevicesPermissions>>(dp, HttpStatus.OK);
+        return new ResponseEntity<List<Device>>(dList, HttpStatus.OK);
     }
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addDevicesPermissions")
