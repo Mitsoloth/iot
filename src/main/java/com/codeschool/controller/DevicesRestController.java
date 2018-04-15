@@ -37,11 +37,15 @@ public class DevicesRestController {
 	{
 		Device d = device;
 		
-		deviceService.save(d);
+		Device originalDevice = deviceService.findById(d.getId());
+		
+		originalDevice.setDstatus(d.getDstatus());
+		
+		deviceService.save(originalDevice);
 	
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setLocation(ucBuilder.path("/api/getDeviceById/{id}").buildAndExpand(d.getId()).toUri());
-	    return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+	    return new ResponseEntity<String>(headers, HttpStatus.OK);
 		
 	}
 	
