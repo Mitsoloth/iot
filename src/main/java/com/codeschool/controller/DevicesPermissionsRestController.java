@@ -18,6 +18,7 @@ import com.codeschool.entities.Device;
 import com.codeschool.entities.DevicesPermissions;
 import com.codeschool.entities.Person;
 import com.codeschool.entities.Room;
+import com.codeschool.service.DeviceService;
 import com.codeschool.service.DevicesPermissionsService;
 import com.codeschool.service.PersonService;
 import com.codeschool.service.RoomService;
@@ -29,6 +30,24 @@ public class DevicesPermissionsRestController {
 	DevicesPermissionsService devicesPermissionsService;
 	@Autowired
 	PersonService personService;
+	@Autowired
+	DeviceService deviceService;
+
+	
+	@RequestMapping(value = "/api/getDevicesPermissionsByID/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getDevicesPermissionsByID(@PathVariable("id") Integer id) {
+		
+		//Person p = personService.findById(id);
+//		List<Device> dp = devicesPermissionsService.findByPersonQuery(id);
+		//List<DevicesPermissions> dps = devicesPermissionsService.findByPerson(p);
+		DevicesPermissions dp = devicesPermissionsService.findByPermissionID(id);
+		
+        if (dp == null) 
+        {
+            return new ResponseEntity("No permission found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(dp, HttpStatus.OK);
+    }	
 	
 	@RequestMapping(value = "/api/getDevicesPermissionsByPersonID/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getDevicesPermissionsByPersonID(@PathVariable("id") Integer id) {
@@ -53,19 +72,26 @@ public class DevicesPermissionsRestController {
         return new ResponseEntity<List<Device>>(dList, HttpStatus.OK);
     }
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/addDevicesPermissions")
+	@RequestMapping(method = RequestMethod.POST, value = "/api/addDevicesPermissions")
 	public ResponseEntity<?> addDevicesPermissions(@RequestBody DevicesPermissions devicespermissions, UriComponentsBuilder ucBuilder) 
 	{
 		
 		DevicesPermissions dp = devicespermissions;
 		
+		Device d1 = deviceService.findById(dp.getDevice().getId());
+		
+		Person p1 = personService.findById(dp.getPerson().getId());
+		
+		dp.setDevice(d1);
+		dp.setPerson(p1);
+		
 		devicesPermissionsService.save(dp);
 	
 		//HttpHeaders headers = new HttpHeaders();
 	    //headers.setLocation(ucBuilder.path("/getDevicesPermissionsById/{id}").buildAndExpand(dp.getId()).toUri());
-	    return new ResponseEntity<String>(HttpStatus.CREATED);
-		
-		
+	    return new ResponseEntity<String>(HttpStatus.CREATED);	
 	}
+	
+
 
 }
