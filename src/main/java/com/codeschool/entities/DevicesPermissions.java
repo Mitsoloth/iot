@@ -11,9 +11,10 @@ import javax.persistence.JoinColumn;
 //import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="user_device")
+@Table(name="user_device")//,uniqueConstraints={@UniqueConstraint(columnNames={"personid", "deviceid"})})
 public class DevicesPermissions{
 	
 	@Id

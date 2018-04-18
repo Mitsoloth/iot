@@ -26,12 +26,6 @@ public class DevicesPermissionsServiceImpl implements DevicesPermissionsService 
 	}
 
 	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public DevicesPermissions save(DevicesPermissions dp) {
 		return devicesPermissionsRep.save(dp);
 	}

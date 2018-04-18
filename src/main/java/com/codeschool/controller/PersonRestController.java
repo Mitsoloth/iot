@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.codeschool.entities.Device;
 import com.codeschool.entities.Person;
 import com.codeschool.service.PersonService;
 import com.codeschool.entities.Userrole;
@@ -64,24 +65,40 @@ public class PersonRestController
         return new ResponseEntity<Person>(p, HttpStatus.OK);
     }
 	
+	@RequestMapping(method = RequestMethod.PATCH, value = "/api/patchPerson")
+	public ResponseEntity<?> patchPerson(@RequestBody Person person, UriComponentsBuilder ucBuilder) 
+	{
+		Person p = person;
+		
+		Person originalPerson = personService.findById(p.getId());
+		
+		originalPerson.setEmail(p.getEmail());
+		originalPerson.setPname(p.getPname());
+		originalPerson.setPpassword(p.getPpassword());
+		originalPerson.setRole(p.getRole());
+		originalPerson.setSurname(p.getSurname());
+		
+		personService.save(originalPerson);
+	
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setLocation(ucBuilder.path("/api/getPersonById/{id}").buildAndExpand(p.getId()).toUri());
+	    return new ResponseEntity<String>(headers, HttpStatus.OK);
+		
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/api/addPerson")
 	public ResponseEntity<?> addPerson(@RequestBody Person person, UriComponentsBuilder ucBuilder) 
 	{
 		Person p = person;
 		
-		
-//		Userrole ur = p.getRole();
 		Person personCheck = null;
 		System.out.println(p);
 		
-//		String a = p.getR;
 		personCheck = personService.findByEmail(p.getEmail());
 		
 		if (personCheck == null){
 			System.out.println(p);
-//			Userrole r = userroleService.findRoleIDByName(ur.getName());
 			
-//			p.setRole(r);
 			personService.save(p);
 	
 			HttpHeaders headers = new HttpHeaders();
@@ -125,7 +142,7 @@ public class PersonRestController
         return new ResponseEntity<List<Person>>(pList, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/deletePersonById/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/deletePersonById/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deletePersonById(@PathVariable("id") Integer id) 
     {
         Person p = personService.findById(id);

@@ -33,6 +33,16 @@ public class DevicesPermissionsRestController {
 	@Autowired
 	DeviceService deviceService;
 
+	@RequestMapping(value = "/api/deletePermissionById/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deletePermissionById(@PathVariable("id") Integer id) 
+    {
+        DevicesPermissions dp = devicesPermissionsService.findByPermissionID(id);
+        if (dp == null) {
+            return new ResponseEntity("False Permission ID", HttpStatus.NOT_FOUND);
+        }
+        devicesPermissionsService.delete(dp);
+		return new ResponseEntity("Permission has been deleted.", HttpStatus.OK);
+    }
 	
 	@RequestMapping(value = "/api/getDevicesPermissionsByID/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getDevicesPermissionsByID(@PathVariable("id") Integer id) {
@@ -53,7 +63,7 @@ public class DevicesPermissionsRestController {
     public ResponseEntity<?> getDevicesPermissionsByPersonID(@PathVariable("id") Integer id) {
 		
 		Person p = personService.findById(id);
-//		List<Device> dp = devicesPermissionsService.findByPersonQuery(id);
+
 		List<DevicesPermissions> dps = devicesPermissionsService.findByPerson(p);
 		
 		List<Device> dList = new ArrayList<Device>();
@@ -85,8 +95,15 @@ public class DevicesPermissionsRestController {
 		dp.setDevice(d1);
 		dp.setPerson(p1);
 		
+		//permissionsCheck = devicesPermissionsService.findBy(p.getEmail());
+		
+		//if (personCheck == null){
+		try {
 		devicesPermissionsService.save(dp);
-	
+		}
+		catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}
 		//HttpHeaders headers = new HttpHeaders();
 	    //headers.setLocation(ucBuilder.path("/getDevicesPermissionsById/{id}").buildAndExpand(dp.getId()).toUri());
 	    return new ResponseEntity<String>(HttpStatus.CREATED);	

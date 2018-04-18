@@ -23,7 +23,7 @@ public class RoomRestController
 	@Autowired
 	RoomService roomService;
 	
-	@RequestMapping(value = "/getRoomById/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/getRoomById/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getDeviceById(@PathVariable("id") Integer id) {
         Room r = roomService.findRoomNameByID(id);
         if (r == null) 
@@ -33,7 +33,20 @@ public class RoomRestController
         return new ResponseEntity<Room>(r, HttpStatus.OK);
     }
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/addRoom")
+	@RequestMapping(method = RequestMethod.PATCH, value = "/api/patchRoom")
+	public ResponseEntity<?> patchRoom(@RequestBody Room room, UriComponentsBuilder ucBuilder) 
+	{
+		Room r = room;
+
+		roomService.save(r);
+	
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setLocation(ucBuilder.path("/api/getRoomById/{id}").buildAndExpand(r.getRoomID()).toUri());
+	    return new ResponseEntity<String>(headers, HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/api/addRoom")
 	public ResponseEntity<?> addRoom(@RequestBody Room room, UriComponentsBuilder ucBuilder) 
 	{
 		Room r = room;
@@ -41,11 +54,11 @@ public class RoomRestController
 		roomService.save(r);
 	
 		HttpHeaders headers = new HttpHeaders();
-	    headers.setLocation(ucBuilder.path("/getRoomById/{id}").buildAndExpand(r.getRoomID()).toUri());
+	    headers.setLocation(ucBuilder.path("/api/getRoomById/{id}").buildAndExpand(r.getRoomID()).toUri());
 	    return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/viewAllRooms")
+	@RequestMapping(method = RequestMethod.GET, value = "/api/viewAllRooms")
 	public ResponseEntity<?> viewAllRooms() 
 	{
 		List<Room> dList = roomService.findAll();
@@ -56,7 +69,7 @@ public class RoomRestController
         return new ResponseEntity<List<Room>>(dList, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/deleteRoomById/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/deleteRoomById/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteRoomById(@PathVariable("id") Integer id) 
     {
         Room r = roomService.findRoomNameByID(id);

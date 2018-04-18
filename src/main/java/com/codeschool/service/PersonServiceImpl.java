@@ -31,7 +31,11 @@ public class PersonServiceImpl implements PersonService {
 	}
 	@Override
 	public Person save(Person p) {
-		p.setPpassword(bCryptPasswordEncoder.encode(p.getPpassword()));
+		if(p.getPpassword().length()>6) {			
+			if(!p.getPpassword().substring(0, 7).equals("$2a$10$"))
+				p.setPpassword(bCryptPasswordEncoder.encode(p.getPpassword()));
+		}
+		else p.setPpassword(bCryptPasswordEncoder.encode(p.getPpassword()));
 		return personRep.save(p);
 	}
 	@Override
